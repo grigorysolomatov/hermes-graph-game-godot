@@ -3,8 +3,8 @@ extends Control
 
 signal spawn_node_requested(type: GameState.NodeType, world_pos: Vector2)
 
-const EXPANDED_OFFSET: float = -156.0
-const COLLAPSED_OFFSET: float = -36.0
+const EXPANDED_OFFSET: float = -120.0
+const COLLAPSED_OFFSET: float = 0.0
 
 var _collapsed: bool = false
 var _tween: Tween
