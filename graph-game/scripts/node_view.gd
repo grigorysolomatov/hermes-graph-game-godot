@@ -19,6 +19,8 @@ var _labor_tex: Texture2D
 var _fish_tex: Texture2D
 var _color: Color = WORKER_COLOR
 
+var _highlight_connect: bool = false
+
 var _tracking: bool = false
 var _touch_start_screen: Vector2 = Vector2.ZERO
 var _is_dragging: bool = false
@@ -45,9 +47,15 @@ func setup_ghost(type: GameState.NodeType, labor_texture: Texture2D, fish_textur
 	_update_icon()
 	_inventory_box.hide()
 
+func set_connect_highlight(enabled: bool) -> void:
+	_highlight_connect = enabled
+	queue_redraw()
+
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, NODE_RADIUS, _color)
 	draw_arc(Vector2.ZERO, NODE_RADIUS, 0, TAU, 32, Color(1, 1, 1, 0.2), 2.0)
+	if _highlight_connect:
+		draw_arc(Vector2.ZERO, NODE_RADIUS + 8.0, 0, TAU, 48, Color(0.4, 0.8, 1.0, 0.9), 3.0)
 
 func _update_icon() -> void:
 	if not is_instance_valid(_icon):
@@ -64,11 +72,13 @@ func _update_inventory() -> void:
 		child.queue_free()
 	var show_resources: Array = []
 	if node_type == GameState.NodeType.WORKER:
-		show_resources = [GameState.ResourceType.LABOR]
+		if GameState.get_node_inventory_count(node_id, GameState.ResourceType.LABOR) > 0:
+			show_resources.append(GameState.ResourceType.LABOR)
 	else:
 		if GameState.get_node_inventory_count(node_id, GameState.ResourceType.LABOR) > 0:
 			show_resources.append(GameState.ResourceType.LABOR)
-		show_resources.append(GameState.ResourceType.FISH)
+		if GameState.get_node_inventory_count(node_id, GameState.ResourceType.FISH) > 0:
+			show_resources.append(GameState.ResourceType.FISH)
 	for res: GameState.ResourceType in show_resources:
 		var count: int = GameState.get_node_inventory_count(node_id, res)
 		var row := HBoxContainer.new()

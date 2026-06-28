@@ -35,11 +35,15 @@ func _on_cancel_pressed() -> void:
 func _input(event: InputEvent) -> void:
 	if not visible:
 		return
+	var panel_rect: Rect2 = $Panel.get_global_rect()
+	var pos: Vector2 = Vector2.ZERO
+	var is_press: bool = false
 	if event is InputEventScreenTouch and event.pressed:
-		if not get_rect().has_point(event.position):
-			hide()
-			get_viewport().set_input_as_handled()
+		pos = event.position
+		is_press = true
 	elif event is InputEventMouseButton and event.pressed:
-		if not get_rect().has_point(event.position):
-			hide()
-			get_viewport().set_input_as_handled()
+		pos = event.position
+		is_press = true
+	if is_press and not panel_rect.has_point(pos):
+		hide()
+		get_viewport().set_input_as_handled()

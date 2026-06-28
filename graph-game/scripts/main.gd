@@ -74,17 +74,26 @@ func _on_edge_removed(edge_id: int) -> void:
 		_edge_views[edge_id].queue_free()
 		_edge_views.erase(edge_id)
 
+func _clear_connect_mode() -> void:
+	if _connect_source >= 0 and _node_views.has(_connect_source):
+		_node_views[_connect_source].set_connect_highlight(false)
+	_connect_source = -1
+
 func _on_node_tapped(node_id: int, world_pos: Vector2) -> void:
 	if _connect_source >= 0:
 		if node_id != _connect_source:
 			GameState.add_edge(_connect_source, node_id, GameState.ResourceType.LABOR)
-		_connect_source = -1
+		_clear_connect_mode()
 		_context_menu.hide()
 		return
 	_context_menu.node_id = node_id
 	var screen_pos: Vector2 = get_viewport().get_canvas_transform() * world_pos
 	screen_pos.y -= 100.0
 	screen_pos.x -= 80.0
+	var vp_size: Vector2 = get_viewport().get_visible_rect().size
+	var menu_size: Vector2 = _context_menu.size
+	screen_pos.x = clamp(screen_pos.x, 4.0, vp_size.x - menu_size.x - 4.0)
+	screen_pos.y = clamp(screen_pos.y, 4.0, vp_size.y - menu_size.y - 4.0)
 	_context_menu.position = screen_pos
 	_context_menu.show()
 
@@ -96,6 +105,8 @@ func _on_delete_node(node_id: int) -> void:
 
 func _on_connect_start(node_id: int) -> void:
 	_connect_source = node_id
+	if _node_views.has(node_id):
+		_node_views[node_id].set_connect_highlight(true)
 
 func _on_resource_selected(edge_id: int, resource_type: GameState.ResourceType) -> void:
 	GameState.set_edge_resource(edge_id, resource_type)
@@ -126,12 +137,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			_touch_positions[event.index] = event.position
+			if _connect_source >= 0:
+				_clear_connect_mode()
 		else:
 			_touch_positions.erase(event.index)
 		var count: int = _touch_positions.size()
 		_panning = (count == 1)
 		_pinch_last_dist = _get_pinch_dist() if count == 2 else -1.0
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed and _connect_source >= 0:
+			_clear_connect_mode()
 		_panning = event.pressed
 
 func _input(event: InputEvent) -> void:
@@ -160,7 +175,7 @@ func _input(event: InputEvent) -> void:
 	if pressed and _context_menu.visible:
 		if not _context_menu.get_global_rect().has_point(pos):
 			_context_menu.hide()
-			_connect_source = -1
+			_clear_connect_mode()
 			get_viewport().set_input_as_handled()
 			return
 
