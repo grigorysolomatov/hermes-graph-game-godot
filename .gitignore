@@ -1,0 +1,4 @@
+node_modules/
+export_web/
+/tmp/
+*.zip
