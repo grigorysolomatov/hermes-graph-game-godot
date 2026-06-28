@@ -67,8 +67,8 @@ theme_override_constants/separation = 16
 
 [node name="WorkerBtn" type="Button" parent="Panel/HBox"]
 layout_mode = 2
-size_flags_horizontal = 3
-custom_minimum_size = Vector2(80, 88)
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(80, 80)
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btnhov")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
@@ -77,8 +77,8 @@ text = "Worker"
 
 [node name="SeaBtn" type="Button" parent="Panel/HBox"]
 layout_mode = 2
-size_flags_horizontal = 3
-custom_minimum_size = Vector2(80, 88)
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(80, 80)
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btnhov")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")

@@ -7,6 +7,8 @@ const ARROW_LEN: float = 16.0
 const ARROW_HALF: float = 8.0
 const LINE_COLOR: Color = Color(0.8, 0.8, 0.8, 0.9)
 const NODE_RADIUS: float = 36.0
+const DOT_COLOR: Color = Color(1.0, 1.0, 1.0, 0.9)
+const DOT_RADIUS: float = 6.0
 
 var edge_id: int = -1
 var source_id: int = -1
@@ -16,6 +18,9 @@ var _line: Line2D
 var _arrow: Polygon2D
 var _world_from: Vector2 = Vector2.ZERO
 var _world_to: Vector2 = Vector2.ZERO
+
+var _transport_t: float = -1.0
+var _transport_tween: Tween
 
 func _ready() -> void:
 	_line = Line2D.new()
@@ -36,6 +41,23 @@ func setup(id: int, src: int, tgt: int) -> void:
 
 func _process(_delta: float) -> void:
 	_redraw()
+	if _transport_t >= 0.0:
+		queue_redraw()
+
+func _draw() -> void:
+	if _transport_t >= 0.0:
+		draw_circle(_world_from.lerp(_world_to, _transport_t), DOT_RADIUS, DOT_COLOR)
+
+func animate_transport() -> void:
+	_transport_t = 0.0
+	if is_instance_valid(_transport_tween):
+		_transport_tween.kill()
+	_transport_tween = create_tween()
+	_transport_tween.tween_property(self, "_transport_t", 1.0, GameState._tick_interval)
+	_transport_tween.tween_callback(func() -> void:
+		_transport_t = -1.0
+		queue_redraw()
+	)
 
 func _redraw() -> void:
 	if not GameState.nodes.has(source_id) or not GameState.nodes.has(target_id):

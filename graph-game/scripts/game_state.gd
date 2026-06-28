@@ -5,6 +5,7 @@ signal node_added(node_data: Dictionary)
 signal node_removed(node_id: int)
 signal edge_added(edge_data: Dictionary)
 signal edge_removed(edge_id: int)
+signal resource_transported(edge_id: int)
 
 enum NodeType { WORKER, SEA }
 enum ResourceType { LABOR, FISH }
@@ -133,6 +134,7 @@ func _do_tick() -> void:
 		var taken: int = _sub_from_inventory(src, res, 1)
 		if taken > 0:
 			_add_to_inventory(tgt, res, taken)
+			resource_transported.emit(edge_id)
 
 	# 3. Sea nodes convert labor -> fish
 	for node_id: int in nodes:

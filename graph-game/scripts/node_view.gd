@@ -74,7 +74,7 @@ func _update_inventory() -> void:
 		var row := HBoxContainer.new()
 		row.alignment = BoxContainer.ALIGNMENT_CENTER
 		var icon := TextureRect.new()
-		icon.custom_minimum_size = Vector2(20, 20)
+		icon.custom_minimum_size = Vector2(24, 24)
 		icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.texture = _labor_tex if res == GameState.ResourceType.LABOR else _fish_tex
