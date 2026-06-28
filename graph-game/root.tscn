@@ -1,54 +1,41 @@
 [gd_scene format=3 uid="uid://b5kn4neaqm0a7"]
 
-[ext_resource type="Script" path="res://scripts/counter.gd" id="1_counter"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
-bg_color = Color(0.486, 0.227, 0.929, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://context_menu_scene" path="res://scenes/ContextMenu.tscn" id="2_ctxmenu"]
+[ext_resource type="PackedScene" uid="uid://node_menu_scene" path="res://scenes/NodeMenu.tscn" id="3_nodemenu"]
+[ext_resource type="PackedScene" uid="uid://time_controls_scene" path="res://scenes/TimeControls.tscn" id="4_timectrl"]
+[ext_resource type="PackedScene" uid="uid://resource_picker_scene" path="res://scenes/ResourcePicker.tscn" id="5_respicker"]
 
 [node name="Root" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1_counter")
+script = ExtResource("1_main")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.102, 0.102, 0.102, 1)
+color = Color(0.071, 0.071, 0.082, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -120.0
-offset_right = 150.0
-offset_bottom = 120.0
-alignment = 1
+[node name="GameWorld" type="Node2D" parent="."]
 
-[node name="CountLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-theme_override_font_sizes/font_size = 96
-theme_override_colors/font_color = Color(0.91, 0.91, 0.91, 1)
+[node name="Camera2D" type="Camera2D" parent="GameWorld"]
 
-[node name="Button" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-custom_minimum_size = Vector2(300, 80)
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-text = "TAP ME"
+[node name="ContextMenuLayer" type="CanvasLayer" parent="."]
+layer = 10
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="ContextMenu" parent="ContextMenuLayer" instance=ExtResource("2_ctxmenu")]
+visible = false
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="NodeMenu" parent="UILayer" instance=ExtResource("3_nodemenu")]
+
+[node name="TimeControls" parent="UILayer" instance=ExtResource("4_timectrl")]
+
+[node name="ResourcePicker" parent="UILayer" instance=ExtResource("5_respicker")]
+visible = false

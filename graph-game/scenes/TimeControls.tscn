@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://time_controls_scene"]
+
+[ext_resource type="Script" path="res://scripts/time_controls.gd" id="1_timectrl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.12, 0.12, 0.15, 0.95)
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.2, 0.2, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btnhov"]
+bg_color = Color(0.3, 0.3, 0.38, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toggle"]
+bg_color = Color(0.18, 0.18, 0.22, 0.9)
+corner_radius_top_left = 6
+corner_radius_bottom_left = 6
+
+[node name="TimeControls" type="Control"]
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -152.0
+offset_top = 60.0
+offset_right = 0.0
+offset_bottom = 260.0
+script = ExtResource("1_timectrl")
+
+[node name="ToggleBtn" type="Button" parent="."]
+layout_mode = 0
+position = Vector2(0, 0)
+size = Vector2(32, 48)
+theme_override_styles/normal = SubResource("StyleBoxFlat_toggle")
+theme_override_styles/hover = SubResource("StyleBoxFlat_toggle")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_toggle")
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+text = ">"
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+position = Vector2(32, 0)
+size = Vector2(120, 200)
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+theme_override_constants/separation = 8
+
+[node name="PauseBtn" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 48)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btnhov")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "Pause"
+
+[node name="Speed1Btn" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 48)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btnhov")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "1x"
+
+[node name="Speed2Btn" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 48)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btnhov")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "2x"
+
+[connection signal="pressed" from="ToggleBtn" to="." method="_on_toggle_pressed"]
+[connection signal="pressed" from="Panel/VBox/PauseBtn" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="Panel/VBox/Speed1Btn" to="." method="_on_speed1_pressed"]
+[connection signal="pressed" from="Panel/VBox/Speed2Btn" to="." method="_on_speed2_pressed"]

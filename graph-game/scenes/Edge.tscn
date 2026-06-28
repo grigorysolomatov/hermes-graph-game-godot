@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://edge_view_scene"]
+
+[ext_resource type="Script" path="res://scripts/edge_view.gd" id="1_edgeview"]
+
+[node name="EdgeView" type="Node2D"]
+script = ExtResource("1_edgeview")

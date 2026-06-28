@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://resource_picker_scene"]
+
+[ext_resource type="Script" path="res://scripts/resource_picker.gd" id="1_respicker"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_overlay"]
+bg_color = Color(0, 0, 0, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.15, 0.15, 0.18, 0.97)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.22, 0.22, 0.27, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btnhov"]
+bg_color = Color(0.32, 0.32, 0.38, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cancel"]
+bg_color = Color(0.3, 0.1, 0.1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cancelh"]
+bg_color = Color(0.4, 0.15, 0.15, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ResourcePicker" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_respicker")
+
+[node name="DimOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.45)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -110.0
+offset_right = 120.0
+offset_bottom = 110.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+theme_override_constants/separation = 8
+
+[node name="LaborBtn" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 54)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btnhov")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+theme_override_colors/font_color = Color(0.961, 0.620, 0.043, 1)
+text = "Labor"
+icon_alignment = 0
+
+[node name="FishBtn" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 54)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btnhov")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+theme_override_colors/font_color = Color(0.078, 0.722, 0.651, 1)
+text = "Fish"
+icon_alignment = 0
+
+[node name="CancelBtn" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 48)
+theme_override_styles/normal = SubResource("StyleBoxFlat_cancel")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cancelh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cancel")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Cancel"
+
+[connection signal="pressed" from="Panel/VBox/LaborBtn" to="." method="_on_labor_pressed"]
+[connection signal="pressed" from="Panel/VBox/FishBtn" to="." method="_on_fish_pressed"]
+[connection signal="pressed" from="Panel/VBox/CancelBtn" to="." method="_on_cancel_pressed"]
