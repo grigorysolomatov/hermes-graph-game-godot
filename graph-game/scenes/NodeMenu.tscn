@@ -86,5 +86,3 @@ theme_override_colors/font_color = Color(0.078, 0.722, 0.651, 1)
 text = "Sea"
 
 [connection signal="pressed" from="ToggleBtn" to="." method="_on_toggle_pressed"]
-[connection signal="button_down" from="Panel/HBox/WorkerBtn" to="." method="_on_worker_drag_started"]
-[connection signal="button_down" from="Panel/HBox/SeaBtn" to="." method="_on_sea_drag_started"]

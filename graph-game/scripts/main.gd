@@ -73,7 +73,7 @@ func _on_node_tapped(node_id: int, world_pos: Vector2) -> void:
 		return
 	_context_menu.node_id = node_id
 	var screen_pos: Vector2 = get_viewport().get_canvas_transform() * world_pos
-	screen_pos.y -= 70.0
+	screen_pos.y -= 100.0
 	screen_pos.x -= 80.0
 	_context_menu.position = screen_pos
 	_context_menu.show()

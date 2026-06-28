@@ -13,7 +13,7 @@ var _tween: Tween
 @onready var _speed2_btn: Button = $Panel/VBox/Speed2Btn
 
 func _ready() -> void:
-	_set_active_speed(1)
+	_set_active_speed(-1)
 
 func _on_toggle_pressed() -> void:
 	_collapsed = !_collapsed

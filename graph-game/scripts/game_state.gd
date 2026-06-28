@@ -19,7 +19,7 @@ var _next_node_id: int = 0
 var _next_edge_id: int = 0
 var _tick_timer: float = 0.0
 var _tick_interval: float = TICK_INTERVAL_1X
-var paused: bool = false
+var paused: bool = true
 var speed_multiplier: int = 1  # 1 or 2
 
 func _ready() -> void:
